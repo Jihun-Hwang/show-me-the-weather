@@ -4,6 +4,7 @@ import {MaterialCommunityIcons} from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
+import { LinearGradient } from 'expo-linear-gradient';
 
 export default class WeatherDetailScreen extends React.Component {
     constructor(props) {
@@ -139,26 +140,51 @@ export default class WeatherDetailScreen extends React.Component {
             )
         }
 
-        let celsius = this.state.main.temp - 273.15;
+        const breifWeatherInfo = this.state.weather[0].main;
 
-        return (
-            <View style={styles.container}>
-                {this.renderClouds()}
-                {this.renderTemperature()}
-                {this.renderWind()}
-                <View style = {styles.inRow}>
-                    {this.renderWeatherCondition()}
+        return ( 
+            <LinearGradient colors={weatherConditions[breifWeatherInfo].gradient} style={styles.container}>
+                <View>
+                    {this.renderClouds()}
+                    {this.renderTemperature()}
+                    {this.renderWind()}
+                    <View style = {styles.inRow}>
+                        {this.renderWeatherCondition()}
+                    </View>
+                    {this.renderGoogleMap()}
                 </View>
-                {this.renderGoogleMap()}
-            </View>
+            </LinearGradient>
         );
     }
 }
 
-const styles = StyleSheet.create({
+const weatherConditions = { 
+    "Thunderstorm":{
+        gradient: ["#1F1C2C", "#928DAB"]
+    },
+    "Drizzle": {
+        gradient: ["#59C173", "#5D26C1"]
+    },
+    "Rain": {
+        gradient: ["#005AA7", "#FFFDE4"]
+    },
+    "Snow": {
+        gradient: ["#E0EAFC", "#CFDEF3"]
+    },
+    "Atmosphere": {
+        gradient: ["#FC5C7D", "#6A82FB"]
+    },
+    "Clear": {
+        gradient: ["#2193b0", "#6dd5ed"]
+    },
+    "Clouds": {
+        gradient: ["#4ECDC4", "#556270"]
+    },
+}
+
+const styles = StyleSheet.create({ 
     container: {
         flex: 1,
-        backgroundColor: '#8888FF',
         alignItems: 'center',
         justifyContent: 'center'
     },
