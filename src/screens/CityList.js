@@ -1,51 +1,77 @@
 import React from 'react';
 import { FlatList, StyleSheet, Text, TouchableOpacity } from 'react-native';
 import cityListApi from '../api/CityListApi';
+import { ScrollView } from 'react-native-gesture-handler';
+import { Input } from 'react-native-elements';
+
 
 export default class CityList extends React.Component {
-    constructor(props) {
-        super(props);
+  constructor(props) {
 
-        this.state = {
-            cities: []
-        };
-    }
+    super(props);
 
-    componentDidMount() {
-        cityListApi.fetchAvailableCities()
-            .then(cities => {
-                console.log('cities = ', cities.length);
-                this.setState({
-                    cities
-                });
-            });
-    }
+    this.state = {
+      cities: [],
+      searchCities: [],
+      search_input : "",
+    };
+  }
 
-    onPressCity(item) {
-        console.log("onPressCity = ", item);
-        this.props.navigation.navigate('Detail', {
-            city: item
+  componentDidMount() {
+    cityListApi.fetchAvailableCities()
+      .then(cities => {
+        console.log('cities =', cities.length);
+        this.setState({
+          cities : cities,
+          searchCities : cities
         });
-    }
+      });
+  }
 
-    renderItem(city) {
-        return (
-            <TouchableOpacity style={styles.item} onPress={() => this.onPressCity(city)}>
-                <Text style={styles.text}>{city}</Text>
-            </TouchableOpacity>
-        );
-    }
+  onPressCity(item) {
+    this.props.navigation.navigate(
+      'Detail',
+      {
+        city: item
+      }
+    );
+  }
 
-    render() {
-        return (
-            <FlatList style={styles.container}
-                numColumns={3}
-                renderItem={({ item }) => this.renderItem(item)}
-                keyExtractor={item => item}
-                data={this.state.cities}
-            />
-        );
-    }
+  onKeyPressInput(){
+    let searchInput = this.state.searchInput;
+    let cities = this.state.cities;
+
+    this.setState({
+      searchCities : cities.filter(city=>city.toLowerCase().indexOf(searchInput)>-1)
+    })
+  }
+
+  renderItem(city) {
+    return (
+      <TouchableOpacity style={styles.item} onPress={() => this.onPressCity(city)}>
+        <Text style={styles.text}>{city}</Text>
+      </TouchableOpacity>
+    );
+  }
+
+  render() {
+    return (
+      <ScrollView>
+        <Input
+          placeholder='Search'
+          onKeyPress={()=>this.onKeyPressInput()}
+          onChangeText={(searchInput) => this.setState({searchInput})}
+          value={this.state.searchInput}
+        />
+        <FlatList style={styles.container}
+          numColumns={3}
+          renderItem={({ item }) => this.renderItem(item)}
+          keyExtractor={item => item}
+          data={this.state.searchCities}
+        />
+      </ScrollView>
+    );
+  }
 }
 
 const styles = StyleSheet.create({
