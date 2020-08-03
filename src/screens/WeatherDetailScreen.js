@@ -47,7 +47,7 @@ export default class WeatherDetailScreen extends React.Component {
             'Overcast'
         ];
 
-        const text = (clouds === null) ? cloudStatus[0] : cloudStatus[Math.max(parseInt(clouds / 20), 4)];
+        const text = (clouds === null) ? 'Null' : cloudStatus[Math.min(parseInt(clouds / 20), 4)];
 
         return (
             <Text>Sky: {text}</Text>
