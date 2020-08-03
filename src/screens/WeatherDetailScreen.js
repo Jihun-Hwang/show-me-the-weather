@@ -140,10 +140,10 @@ export default class WeatherDetailScreen extends React.Component {
             )
         }
 
-        const breifWeatherInfo = this.state.weather[0].main;
+        const briefWeatherInfo = this.state.weather[0].main;
 
         return ( 
-            <LinearGradient colors={weatherConditions[breifWeatherInfo].gradient} style={styles.container}>
+            <LinearGradient colors={weatherConditions[briefWeatherInfo].gradient} style={styles.container}>
                 <View>
                     {this.renderClouds()}
                     {this.renderTemperature()}
