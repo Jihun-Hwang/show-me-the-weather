@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Image, StyleSheet, View, Text } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, View, Text, Button } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
@@ -12,6 +12,7 @@ export default class WeatherDetailScreen extends React.Component {
 
         this.state = {
             isLoading: true,
+            clicked : true,
         };
     }
 
@@ -97,6 +98,36 @@ export default class WeatherDetailScreen extends React.Component {
         });
     }
 
+
+    renderDetailWeatherCondition() {
+        const feelsLikeTemp = this.state.main.feels_like - 273.15;
+        const tempMin = this.state.main.temp_min - 273.15;
+        const tempMax = this.state.main.temp_max - 273.15;
+        const pressure = this.state.main.pressure;
+        const humidity = this.state.main.humidity;
+
+        const clickHandler = () => 
+        {
+           alert(
+               `
+               Sensible Temperature: ${feelsLikeTemp.toFixed(1)}\n
+               Today Min Temperature: ${tempMin.toFixed(1)}\n
+               Today Max Temperature: ${tempMax.toFixed(1)}\n
+               pressure: ${pressure}hPa\n
+               humidity: ${humidity}%
+               `
+           )
+        }
+
+        return (
+            <View>
+             <Button title={'Alert Detail Weathers'} onPress = {clickHandler}/>   
+             </View>
+        )
+  
+
+    }
+
     renderGoogleMap() {
         const {
             lat, lon
@@ -152,6 +183,7 @@ export default class WeatherDetailScreen extends React.Component {
                         <View style = {styles.inRow}>
                             {this.renderWeatherCondition()}
                         </View>
+                        {this.renderDetailWeatherCondition()}
                         {this.renderGoogleMap()}
                     </View>
                 </LinearGradient>
