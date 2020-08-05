@@ -142,19 +142,29 @@ export default class WeatherDetailScreen extends React.Component {
 
         const briefWeatherInfo = this.state.weather[0].main;
 
-        return ( 
-            <LinearGradient colors={weatherConditions[briefWeatherInfo].gradient} style={styles.container}>
-                <View>
-                    {this.renderClouds()}
-                    {this.renderTemperature()}
-                    {this.renderWind()}
-                    <View style = {styles.inRow}>
-                        {this.renderWeatherCondition()}
+        try{
+            return ( 
+                <LinearGradient colors={weatherConditions[briefWeatherInfo].gradient} style={styles.container}>
+                    <View>
+                        {this.renderClouds()}
+                        {this.renderTemperature()}
+                        {this.renderWind()}
+                        <View style = {styles.inRow}>
+                            {this.renderWeatherCondition()}
+                        </View>
+                        {this.renderGoogleMap()}
                     </View>
-                    {this.renderGoogleMap()}
-                </View>
-            </LinearGradient>
-        );
+                </LinearGradient>
+            );
+        } catch(e){
+            return(
+                <LinearGradient colors={weatherConditions["Error"].gradient} style={styles.container}>
+                    <View>
+                        <Text style = {styles.textCondition_error}>데이터를 로드하는데 실패하였습니다</Text>
+                    </View>
+                </LinearGradient>
+            );
+        }
     }
 }
 
@@ -175,10 +185,13 @@ const weatherConditions = {
         gradient: ["#FC5C7D", "#6A82FB"]
     },
     "Clear": {
-        gradient: ["#2193b0", "#6dd5ed"]
+        gradient: ["#e1eec3", "#f05053"]
     },
     "Clouds": {
         gradient: ["#4ECDC4", "#556270"]
+    },
+    "Error": {
+        gradient: ["#636363", "#a2ab58"]
     },
 }
 
@@ -215,6 +228,10 @@ const styles = StyleSheet.create({
 
     textCondition: {
         color: '#FFF'
+    },
+
+    textCondition_error: {
+        color : 'black'
     },
 
     rotation: {
