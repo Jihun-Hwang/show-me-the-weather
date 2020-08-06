@@ -13,13 +13,7 @@ export default class WeatherDetailScreen extends React.Component {
 
         this.state = {
             isLoading: true,
-            images: [
-                "https://tile.openweathermap.org/map/clouds_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
-                "https://tile.openweathermap.org/map/precipitation_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
-                "https://tile.openweathermap.org/map/pressure_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
-                "https://tile.openweathermap.org/map/wind_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
-                "https://tile.openweathermap.org/map/temp_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
-            ]
+            
         };
     }
 
@@ -151,6 +145,14 @@ export default class WeatherDetailScreen extends React.Component {
         // After generating API key, enable billing to activate API.
         const url = `https://maps.googleapis.com/maps/api/staticmap?center=${lat},${lon}&markers=color:red%7C${lat},${lon}&zoom=9&size=400x400&maptype=roadmap&key=${googleApiKey}`;
 
+        const images = [
+            "https://tile.openweathermap.org/map/clouds_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
+            "https://tile.openweathermap.org/map/precipitation_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
+            "https://tile.openweathermap.org/map/pressure_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
+            "https://tile.openweathermap.org/map/wind_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
+            "https://tile.openweathermap.org/map/temp_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
+        ];
+
         return (
             <View style={styles.mapContainer}>
                 {/* <Image style={styles.mapImage}
@@ -159,7 +161,7 @@ export default class WeatherDetailScreen extends React.Component {
                     source={{ uri: url }}
                 /> */}
                 <SliderBox
-                    images={this.state.images}
+                    images={images}
                     sliderBoxHeight={400}
                 />
             </View>
