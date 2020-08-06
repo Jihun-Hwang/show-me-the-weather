@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Image, StyleSheet, View, Text, Button } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, View, Text, Button,TouchableOpacity } from 'react-native';
 import {MaterialCommunityIcons} from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
@@ -12,7 +12,6 @@ export default class WeatherDetailScreen extends React.Component {
 
         this.state = {
             isLoading: true,
-            clicked : true,
         };
     }
 
@@ -120,13 +119,19 @@ export default class WeatherDetailScreen extends React.Component {
         }
 
         return (
-            <View>
-             <Button title={'Alert Detail Weathers'} onPress = {clickHandler}/>   
+            <View >
+             <TouchableOpacity style={styles.button} onPress = {clickHandler} >   
+             <Text style={styles.text}> Alert Detail Weathers</Text>
+             </TouchableOpacity>
              </View>
         )
   
 
     }
+
+
+        
+
 
     renderGoogleMap() {
         const {
@@ -183,7 +188,9 @@ export default class WeatherDetailScreen extends React.Component {
                         <View style = {styles.inRow}>
                             {this.renderWeatherCondition()}
                         </View>
+
                         {this.renderDetailWeatherCondition()}
+ 
                         {this.renderGoogleMap()}
                     </View>
                 </LinearGradient>
@@ -233,7 +240,28 @@ const styles = StyleSheet.create({
         alignItems: 'center',
         justifyContent: 'center'
     },
-
+    button : {
+        width : 200,
+        height : 40,
+        backgroundColor : "gray",
+        borderColor: 'black',
+        borderWidth: 5,
+        borderRadius: 10  ,
+        shadowColor: "gray",
+        shadowOffset: {
+            width: 0,
+            height: 11,
+        },
+        shadowOpacity: 0.57,
+        shadowRadius: 15.19,
+        
+        elevation: 23,
+    },
+    text :{
+        color : 'white',
+        fontWeight : 'bold',
+        textAlign : 'center',
+    },
     inRow: {
         flexDirection: 'row'
     },
