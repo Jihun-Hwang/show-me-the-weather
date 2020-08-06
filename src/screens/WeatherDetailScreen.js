@@ -1,5 +1,5 @@
 import React from 'react';
-import { ActivityIndicator, Image, StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Image, StyleSheet, View, Text, Button, Alert, TouchableOpacity } from 'react-native';
 import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
@@ -114,14 +114,17 @@ export default class WeatherDetailScreen extends React.Component {
         const humidity = this.state.main.humidity;
 
         const clickHandler = () => {
-            alert(
-                `
-               Sensible Temperature: ${feelsLikeTemp.toFixed(1)}\n
-               Today Min Temperature: ${tempMin.toFixed(1)}\n
-               Today Max Temperature: ${tempMax.toFixed(1)}\n
-               pressure: ${pressure}hPa\n
-               humidity: ${humidity}%
-               `
+            Alert.alert(
+                "Details",
+                "Sensible Temperature: " + feelsLikeTemp.toFixed(1) + "°C\n" +
+                "Today\'s Min Temperature: " + tempMin.toFixed(1) + "°C\n" +
+                "Today\'s Max Temperature: " + tempMax.toFixed(1) + "°C\n" +
+               "Pressure: " + pressure + "hPa\n" +
+               "Humidity: " + humidity + "%",
+                [
+                    { text: "OK", onPress: () => console.log("OK Pressed") }
+                ],
+                { cancelable: false }
             )
         }
 
