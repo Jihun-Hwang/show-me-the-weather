@@ -1,10 +1,11 @@
 import React from 'react';
-import { ActivityIndicator, Image, StyleSheet, View, Text, Button,TouchableOpacity } from 'react-native';
-import {MaterialCommunityIcons} from '@expo/vector-icons';
+import { ActivityIndicator, Image, StyleSheet, View, Text, Button, TouchableOpacity } from 'react-native';
+import { MaterialCommunityIcons } from '@expo/vector-icons';
 import openWeatherApi from '../api/OpenWeatherApi';
 import Constants from 'expo-constants';
 import _get from 'lodash.get';
 import { LinearGradient } from 'expo-linear-gradient';
+import { SliderBox } from "react-native-image-slider-box";
 
 export default class WeatherDetailScreen extends React.Component {
     constructor(props) {
@@ -13,10 +14,11 @@ export default class WeatherDetailScreen extends React.Component {
         this.state = {
             isLoading: true,
             images: [
-                "https://source.unsplash.com/1024x768/?nature",
-                "https://source.unsplash.com/1024x768/?water",
-                "https://source.unsplash.com/1024x768/?girl",
-                "https://source.unsplash.com/1024x768/?tree", 
+                "https://tile.openweathermap.org/map/clouds_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
+                "https://tile.openweathermap.org/map/precipitation_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
+                "https://tile.openweathermap.org/map/pressure_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
+                "https://tile.openweathermap.org/map/wind_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
+                "https://tile.openweathermap.org/map/temp_new/1/1/1.png?appid=6db15c64bb9d142e87b1426c8d6c07a3",
             ]
         };
     }
@@ -44,7 +46,7 @@ export default class WeatherDetailScreen extends React.Component {
 
     renderClouds() {
         const clouds = _get(this.state, ['clouds', 'all'], null);
-        
+
         const cloudStatus = [
             'Clear',
             'Partly Cloudy',
@@ -66,20 +68,20 @@ export default class WeatherDetailScreen extends React.Component {
 
         const arrowStyle = {
             transform: [
-                {rotate: `${deg}deg`}
+                { rotate: `${deg}deg` }
             ],
             width: 24,
             height: 24
         };
 
         return (
-            <View style = {[styles.inRow, styles.alignItemInCenter]}>
+            <View style={[styles.inRow, styles.alignItemInCenter]}>
                 <Text>
-                    Wind Speed: {speed? `${speed}m/s` : `Null`}
+                    Wind Speed: {speed ? `${speed}m/s` : `Null`}
                 </Text>
 
-                <View style = {[arrowStyle]}>
-                    <MaterialCommunityIcons name = "arrow-up-circle" size={24} color="black" />
+                <View style={[arrowStyle]}>
+                    <MaterialCommunityIcons name="arrow-up-circle" size={24} color="black" />
                 </View>
             </View>
         );
@@ -91,13 +93,13 @@ export default class WeatherDetailScreen extends React.Component {
             description,
         }, index) => {
             return (
-                <View style ={styles.weatherCondition} key={index}>
+                <View style={styles.weatherCondition} key={index}>
                     <Image source={{
                         uri: `http://openweathermap.org/img/wn/${icon}@2x.png`,
                         width: 72,
                         height: 48
                     }} />
-                    <Text style = {styles.textCondition}>{description}</Text>
+                    <Text style={styles.textCondition}>{description}</Text>
                 </View>
             );
         });
@@ -111,33 +113,26 @@ export default class WeatherDetailScreen extends React.Component {
         const pressure = this.state.main.pressure;
         const humidity = this.state.main.humidity;
 
-        const clickHandler = () => 
-        {
-           alert(
-               `
+        const clickHandler = () => {
+            alert(
+                `
                Sensible Temperature: ${feelsLikeTemp.toFixed(1)}\n
                Today Min Temperature: ${tempMin.toFixed(1)}\n
                Today Max Temperature: ${tempMax.toFixed(1)}\n
                pressure: ${pressure}hPa\n
                humidity: ${humidity}%
                `
-           )
+            )
         }
 
         return (
             <View >
-             <TouchableOpacity style={styles.button} onPress = {clickHandler} >   
-             <Text style={styles.text}> Alert Detail Weathers</Text>
-             </TouchableOpacity>
-             </View>
+                <TouchableOpacity style={styles.button} onPress={clickHandler} >
+                    <Text style={styles.text}> Alert Detail Weathers</Text>
+                </TouchableOpacity>
+            </View>
         )
-  
-
     }
-
-
-        
-
 
     renderGoogleMap() {
         const {
@@ -155,10 +150,14 @@ export default class WeatherDetailScreen extends React.Component {
 
         return (
             <View style={styles.mapContainer}>
-                <Image style={styles.mapImage}
+                {/* <Image style={styles.mapImage}
                     resizeMode={'stretch'}
                     resizeMethod={'scale'}
                     source={{ uri: url }}
+                /> */}
+                <SliderBox
+                    images={this.state.images}
+                    sliderBoxHeight = {400}
                 />
             </View>
         );
@@ -184,37 +183,37 @@ export default class WeatherDetailScreen extends React.Component {
 
         const briefWeatherInfo = this.state.weather[0].main;
 
-        try{
-            return ( 
+        // try {
+            return (
                 <LinearGradient colors={weatherConditions[briefWeatherInfo].gradient} style={styles.container}>
                     <View>
                         {this.renderClouds()}
                         {this.renderTemperature()}
                         {this.renderWind()}
-                        <View style = {styles.inRow}>
+                        <View style={styles.inRow}>
                             {this.renderWeatherCondition()}
                         </View>
 
                         {this.renderDetailWeatherCondition()}
- 
+
                         {this.renderGoogleMap()}
                     </View>
                 </LinearGradient>
             );
-        } catch(e){
-            return(
-                <LinearGradient colors={weatherConditions["Error"].gradient} style={styles.container}>
-                    <View>
-                        <Text style = {styles.textCondition_error}>데이터를 로드하는데 실패하였습니다</Text>
-                    </View>
-                </LinearGradient>
-            );
-        }
+        // } catch (e) {
+        //     return (
+        //         <LinearGradient colors={weatherConditions["Error"].gradient} style={styles.container}>
+        //             <View>
+        //                 <Text style={styles.textCondition_error}>데이터를 로드하는데 실패하였습니다</Text>
+        //             </View>
+        //         </LinearGradient>
+        //     );
+        // }
     }
 }
 
-const weatherConditions = { 
-    "Thunderstorm":{
+const weatherConditions = {
+    "Thunderstorm": {
         gradient: ["#1F1C2C", "#928DAB"]
     },
     "Drizzle": {
@@ -240,19 +239,19 @@ const weatherConditions = {
     },
 }
 
-const styles = StyleSheet.create({ 
+const styles = StyleSheet.create({
     container: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center'
     },
-    button : {
-        width : 200,
-        height : 40,
-        backgroundColor : "gray",
+    button: {
+        width: 200,
+        height: 40,
+        backgroundColor: "gray",
         borderColor: 'black',
         borderWidth: 5,
-        borderRadius: 10  ,
+        borderRadius: 10,
         shadowColor: "gray",
         shadowOffset: {
             width: 0,
@@ -260,13 +259,13 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.57,
         shadowRadius: 15.19,
-        
+
         elevation: 23,
     },
-    text :{
-        color : 'white',
-        fontWeight : 'bold',
-        textAlign : 'center',
+    text: {
+        color: 'white',
+        fontWeight: 'bold',
+        textAlign: 'center',
     },
     inRow: {
         flexDirection: 'row'
@@ -297,12 +296,12 @@ const styles = StyleSheet.create({
     },
 
     textCondition_error: {
-        color : 'black'
+        color: 'black'
     },
 
     rotation: {
         width: 50,
         height: 50,
-        transform: [{rotate: "5deg"}]
+        transform: [{ rotate: "5deg" }]
     }
 });
