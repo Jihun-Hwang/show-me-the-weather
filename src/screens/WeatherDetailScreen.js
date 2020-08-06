@@ -12,6 +12,12 @@ export default class WeatherDetailScreen extends React.Component {
 
         this.state = {
             isLoading: true,
+            images: [
+                "https://source.unsplash.com/1024x768/?nature",
+                "https://source.unsplash.com/1024x768/?water",
+                "https://source.unsplash.com/1024x768/?girl",
+                "https://source.unsplash.com/1024x768/?tree", 
+            ]
         };
     }
 
