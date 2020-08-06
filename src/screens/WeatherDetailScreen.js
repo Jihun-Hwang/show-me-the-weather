@@ -157,7 +157,7 @@ export default class WeatherDetailScreen extends React.Component {
                 /> */}
                 <SliderBox
                     images={this.state.images}
-                    sliderBoxHeight = {400}
+                    sliderBoxHeight={400}
                 />
             </View>
         );
@@ -184,31 +184,30 @@ export default class WeatherDetailScreen extends React.Component {
         const briefWeatherInfo = this.state.weather[0].main;
 
         // try {
-            return (
-                <LinearGradient colors={weatherConditions[briefWeatherInfo].gradient} style={styles.container}>
-                    <View>
-                        {this.renderClouds()}
-                        {this.renderTemperature()}
-                        {this.renderWind()}
-                        <View style={styles.inRow}>
-                            {this.renderWeatherCondition()}
-                        </View>
-
-                        {this.renderDetailWeatherCondition()}
-
-                        {this.renderGoogleMap()}
+        return (
+            <LinearGradient colors={weatherConditions[briefWeatherInfo].gradient} style={styles.container}>
+                <View>
+                    {this.renderClouds()}
+                    {this.renderTemperature()}
+                    {this.renderWind()}
+                    <View style={styles.inRow}>
+                        {this.renderWeatherCondition()}
                     </View>
-                </LinearGradient>
-            );
-        // } catch (e) {
-        //     return (
-        //         <LinearGradient colors={weatherConditions["Error"].gradient} style={styles.container}>
-        //             <View>
-        //                 <Text style={styles.textCondition_error}>데이터를 로드하는데 실패하였습니다</Text>
-        //             </View>
-        //         </LinearGradient>
-        //     );
-        // }
+
+                    {this.renderDetailWeatherCondition()}
+
+                    {this.renderGoogleMap()}
+                </View>
+            </LinearGradient>
+        );
+    } catch(e) {
+        return (
+            <LinearGradient colors={weatherConditions["Error"].gradient} style={styles.container}>
+                <View>
+                    <Text style={styles.textCondition_error}>데이터를 로드하는데 실패하였습니다</Text>
+                </View>
+            </LinearGradient>
+        );
     }
 }
 
@@ -259,7 +258,6 @@ const styles = StyleSheet.create({
         },
         shadowOpacity: 0.57,
         shadowRadius: 15.19,
-
         elevation: 23,
     },
     text: {
