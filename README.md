@@ -75,9 +75,13 @@ TouchableOpacity를 이용하여 날씨 세부 정보를 보여주는 버튼을 
 
 
 ### 4. 대기 상황을 보여주는 지도 추가
+API를 통해 리턴되는 기상도는 PNG형식의 이미지 데이터다. 대기 온도, 습도, 구름양, 지표면 기압, 풍속 정보를 시각화해서 보여주고자 CarouselView를 사용했다.
+CarouselView의 한 종류인 SliderBox 컴포넌트는 스와이프 제스쳐를 통해 다양한 지도를 좌우러 넘기며 볼 수 있게 해준다.
+SliderBox의 하단에 위치한 점(bullet)이 몇개의 지도 이미지가 있는지 시각적으로 표현해주며 사용자가 몇 번째 지도를 보고 있는지 표시해줘 UX 측면에서 긍정적이다.
 
+SliderBox 패키지는 `npm i react-native-image-slider-box`를 통해 설치 가능하다.
 
 ### Reference
  - 그라데이션 color value : https://uigradients.com/#KyooTah
-
+ - SliderBox : https://www.npmjs.com/package/react-native-image-slider-box
 
