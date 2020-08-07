@@ -8,7 +8,7 @@ React Native application that displays weather data of cities in Korea.
 아래 4가지 추가 기능을 구현한다.
 
 ### 1. 날씨에 맞는 배경 그라데이션 추가
- - 배경 그라데이션을 표한하기 위해 expo-linear-gradient 모듈을 설치하고 가져온다.
+ - 배경 그라데이션을 표하기 위해 expo-linear-gradient 모듈을 설치하고 가져온다.
 ```
 import { LinearGradient } from 'expo-linear-gradient';
 ```
@@ -55,6 +55,15 @@ const weatherConditions = {
 ```
 
 ### 2. 도시이름 검색기능 추가
+  - 도시이름을 검색하기 위해 react-native-elements 모듈을 설치하고 가져온다.
+```
+import { Input } from 'react-native-elements';
+```
+  - 도시이름을 검색할 때 소문자로 검색해도 제대로 반영하기 위해 toLowerCase()를 사용한다.
+```
+searchCities: cities.filter(city=>city.toLowerCase().indexOf(searchInput)>-1);
+검색된 도시는 searchCities로 걸러서 화면에 출력되도록 한다.
+```
  
 ### 3. 날씨의 상세정보를 보여주는 버튼 추가
 
