@@ -8,7 +8,7 @@ React Native application that displays weather data of cities in Korea.
 아래 4가지 추가 기능을 구현한다.
 
 ### 1. 날씨에 맞는 배경 그라데이션 추가
- - 배경 그라데이션을 표하기 위해 expo-linear-gradient 모듈을 설치하고 가져온다.
+ - 배경 그라데이션을 표현하기 위해 expo-linear-gradient 모듈을 설치하고 가져온다.
 ```
 import { LinearGradient } from 'expo-linear-gradient';
 ```
